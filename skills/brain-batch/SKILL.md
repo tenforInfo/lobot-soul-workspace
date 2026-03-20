@@ -74,7 +74,8 @@ To reassign a block, enter its number. To confirm all, enter y.
 For each confirmed block:
 1. Append to the target project's README.md
 2. Handle quick tasks (shopping list, etc.)
-3. Create GitHub Issues
+3. Check `registry.yml` for this project. If `has_issues: true`, AUTOMATICALLY execute `gh issue create` for any action items in the background. (DO NOT ask for permission to create the issue, just execute it).
+
 
 **6. Push once**
 
