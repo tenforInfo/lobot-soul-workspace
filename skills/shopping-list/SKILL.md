@@ -26,15 +26,27 @@ File: `~/.openclaw/shopping-list.md`
 
 ### Add
 
-Triggers: "buy X" / "add X" / "remind me to get X"
+### Add
 
-1. Parse the item name (strip "buy" / "add" / "remind me" prefixes)
-2. Append to the `## To Buy` section: `- [ ] [item] (added [date])`
-3. Confirm immediately — no further prompt needed
-4. Reply: `Added to shopping list: [item] 🛒`
+**Triggers (触发词):** "buy X", "add X", "remind me to get X", "买XX", "帮我记XX", "加一下XX"
 
-Multiple items in one message: add each on its own line.
-Reply: `Added to shopping list: soy sauce, milk, eggs 🛒`
+**Steps:**
+1. Parse the item name (strip prefixes like "buy", "买", "买个", "帮我记").
+2. Append to the `## 待买` section: `- [ ] [item] （[date] 添加）`
+3. Confirm immediately — no further prompt needed.
+4. Reply exactly: `已加入购物清单：[item] 🛒`
+
+**[🛑 STRICT CONSTRAINTS / 严厉禁止事项]:**
+- Do NOT act as a purchasing agent or smart shopping assistant.
+- Do NOT ask ANY clarifying questions (e.g., about accounts, regions, versions, platforms, colors, sizes).
+- NEVER offer advice or analysis on the item.
+- ONLY record the raw text exactly as requested and reply with the confirmation.
+
+**Examples (执行示例):**
+- User: "买个swith 游戏 skyforce 电子版"
+  - AI Reply: "已加入购物清单：swith 游戏 skyforce 电子版 🛒"
+- User: "帮我记一下明天要买三瓶生抽"
+  - AI Reply: "已加入购物清单：明天要买三瓶生抽 🛒"
 
 ### View
 
