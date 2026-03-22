@@ -34,7 +34,7 @@ Split on `---` separators. If no explicit separators, split on blank lines betwe
 
 **2. Classify each block**
 
-Read `${BRAIN_SOURCE:-$HOME/source/bunny_stack}/registry.yml`. For each block:
+Read `${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack}/registry.yml`. For each block:
 - Infer the target project or topic
 - Determine intent type: project content / quick task / other
 - Extract key conclusions and action items (1–2 sentences)
@@ -82,7 +82,7 @@ For each confirmed block:
 **6. Push once**
 
 ```bash
-cd ${BRAIN_SOURCE:-$HOME/source/bunny_stack}
+cd ${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack}
 git add -A
 git commit -m "brain: batch import [N items] — [YYYY-MM-DD]"
 git push

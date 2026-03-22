@@ -11,7 +11,7 @@ Intent signals: project name, tech decision, architecture conclusion, product di
 
 **1. Match project**
 
-Read `${BRAIN_SOURCE:-$HOME/source/bunny_stack}/registry.yml`. Compare content keywords against each project's `name`, `description`, and `id`.
+Read `${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack}/registry.yml`. Compare content keywords against each project's `name`, `description`, and `id`.
 
 - Single match → continue
 - Multiple candidates → list them and ask the user to choose by number, or enter "new project"
@@ -20,7 +20,7 @@ Read `${BRAIN_SOURCE:-$HOME/source/bunny_stack}/registry.yml`. Compare content k
 **2. Load project history**
 
 Resolve `brain_file` from registry.yml as an absolute path:
-`${BRAIN_SOURCE:-$HOME/source/bunny_stack}/[brain_file]`
+`${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack}/[brain_file]`
 
 Read the "核心结论" and "行动项" sections from that README.md.
 
@@ -48,7 +48,7 @@ Show the user what will be written before writing anything.
 
 If `has_issues: true`:
 ```
-Ready to write to `${BRAIN_SOURCE:-$HOME/source/bunny_stack}/[brain_file]`:
+Ready to write to `${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack}/[brain_file]`:
 
 **Conclusions**
 → [conclusion 1]
@@ -65,7 +65,7 @@ Confirm? (y/n)
 
 If `has_issues: false` or field absent:
 ```
-Ready to write to `${BRAIN_SOURCE:-$HOME/source/bunny_stack}/[brain_file]`:
+Ready to write to `${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack}/[brain_file]`:
 
 **Conclusions**
 → [conclusion 1]
@@ -93,7 +93,7 @@ After user confirms:
      - Without issues: `- [ ] [action text]`
    - Open questions → "未决问题" section
 3. Update "当前状态" if a clear status change is implied.
-4. `cd ${BRAIN_SOURCE:-$HOME/source/bunny_stack} && git add . && git commit -m "brain: update [project name]" && git push`
+4. `cd ${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack} && git add . && git commit -m "brain: update [project name]" && git push`
 
 Reply with:
 ```

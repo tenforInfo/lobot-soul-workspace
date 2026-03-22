@@ -14,7 +14,7 @@ Before doing anything else:
 2. Read `USER.md` — this is who you're helping
 3. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
 4. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
-5. **[OpenClaw]** Read `registry.yml` from workspace root (`$BRAIN_SOURCE`, fallback `$HOME/source/bunny_stack`)
+5. **[OpenClaw]** Read `registry.yml` from workspace root (`$BRAIN_SOURCE`, fallback `/Users/tensorinfo/source/bunny_stack`)
    → If not found: notify user "⚠️ registry.yml not found — routing unavailable this session", then continue without routing
 
 Don't ask permission. Just do it.
@@ -232,7 +232,7 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 
 **Load on demand (when a project is matched):**
 - The project's `brain_file` (README.md specified in registry.yml)
-- Path resolution: `BRAIN_SOURCE` (fallback: `$HOME/source/bunny_stack`), replace `$SOURCE_ROOT` in registry.yml with this value
+- Path resolution: `BRAIN_SOURCE` (fallback: `/Users/tensorinfo/source/bunny_stack`), replace `$SOURCE_ROOT` in registry.yml with this value
 
 **Never load (unless user explicitly requests):**
 - `human-notes/` directory contents (user private)

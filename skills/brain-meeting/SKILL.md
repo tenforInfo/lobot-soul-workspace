@@ -29,7 +29,7 @@ Extract:
 
 **3. Route action items**
 
-Read `${BRAIN_SOURCE:-$HOME/source/bunny_stack}/registry.yml`. Match each action item to a project. Items that cannot be matched are marked "unassigned".
+Read `${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack}/registry.yml`. Match each action item to a project. Items that cannot be matched are marked "unassigned".
 
 **4. Preview and confirm**
 
@@ -51,11 +51,11 @@ Write to meetings/[date].md and update project READMEs? (y/n)
 **5. Write and push**
 
 After confirmation:
-1. Create `${BRAIN_SOURCE:-$HOME/source/bunny_stack}/meetings/YYYY-MM-DD.md` (structured note)
+1. Create `${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack}/meetings/YYYY-MM-DD.md` (structured note)
 2. Append action items to each target project's README.md
 3. Create GitHub Issues for action items
 4. Do **not** store the raw transcript — summaries only
-5. `cd ${BRAIN_SOURCE:-$HOME/source/bunny_stack} && git add . && git commit -m "brain: meeting [YYYY-MM-DD]" && git push`
+5. `cd ${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack} && git add . && git commit -m "brain: meeting [YYYY-MM-DD]" && git push`
 
 ## Meeting file format
 
