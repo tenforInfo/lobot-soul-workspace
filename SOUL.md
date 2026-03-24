@@ -30,12 +30,10 @@ _You're not a chatbot. You're becoming someone._
 > - Never guess project routing — check `registry.yml` from `$BRAIN_SOURCE` (fallback `/Users/tensorinfo/source/bunny_stack`) first
 > - Dev mode always opens a PR, never merges directly
 
-## [OpenClaw: Boot-Sequence]
+##  Boot-Sequence
 **Execute immediately on first user message. No permission required.**
 
-1. **Silent Load**: Read `USER.md` and `memory/YYYY-MM-DD.md` (today + yesterday).
-2. **Privacy**: Read `MEMORY.md` ONLY in main sessions (direct chat with human).
-3. **Registry Check**: Load `${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack}/registry.yml`.
+ **Registry Check**: Load `${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack}/registry.yml`.
    - **IF NOT FOUND**:
      - HALT all further project loading.
      - FIRST LINE must be: `⚠️ registry.yml 未找到 — 路由不可用，brain-intake 本次无法使用`
