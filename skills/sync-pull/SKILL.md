@@ -1,25 +1,24 @@
-## Task: Execute Pull Sync
-
-**Trigger format:** `/pull` or `/pull [id1] [id2] ...`
-
-**CRITICAL CONSTRAINTS:**
-- DO NOT output a plan.
-- DO NOT ask for `(y/n)` confirmation.
-- DO NOT explain the command.
-- Execute IMMEDIATELY.
-
+---
+name: sync-pull
+description: Pull latest changes from git remotes. Default targets are bunny_stack and the current workspace. Accepts optional project ids to pull specific projects from registry.yml. No confirmation required — executes immediately.
 ---
 
-### Case 1: No args
+## Trigger
 
-Execute immediately, no checks:
+`/pull` or `/pull [id1] [id2] ...`
+
+Skip all other analysis. Execute immediately.
+
+## Steps
+
+### Case 1: No args
 
 ```bash
 git -C /Users/tensorinfo/source/bunny_stack pull
 git -C /Users/tensorinfo/clawd pull
 ```
 
-After execution, print summary with local path, remote URL, and number of changes received (from git pull output — e.g. "3 files changed"):
+Print summary after execution:
 
 ```
 ✅ bunny_stack
@@ -32,19 +31,20 @@ After execution, print summary with local path, remote URL, and number of change
    changes: already up to date
 ```
 
+Get change count from git pull stdout (e.g. "3 files changed"). If already up to date, show `already up to date`.
+
 ---
 
 ### Case 2: With id args
 
 1. Read `/Users/tensorinfo/source/bunny_stack/registry.yml`
 2. For each id:
-   - **Found and `local_path` is not null**: replace `$SOURCE_ROOT` with `${SOURCE_ROOT:-$HOME/source/cool-tool}`, then execute immediately:
+   - **Found, `local_path` not null** → resolve path (replace `$SOURCE_ROOT` with `${SOURCE_ROOT:-$HOME/source/cool-tool}`), execute:
      ```bash
      git -C "<resolved_path>" pull
      ```
-   - **Not found or `local_path` is null**: skip, do not interrupt other targets
-
-3. Print summary after all targets — include local path, remote from registry `git` field, and changes received:
+   - **Not found or `local_path` is null** → skip, do not interrupt other targets
+3. Print summary after all targets:
 
 ```
 ✅ bunny_stack
@@ -54,3 +54,10 @@ After execution, print summary with local path, remote URL, and number of change
 ❌ side-project-idea — skipped (local_path is null)
 ❌ unknown-id — skipped (not found in registry)
 ```
+
+## Constraints
+
+- Do NOT ask for confirmation
+- Do NOT explain the command
+- Do NOT output a plan
+- On failure, continue to next target — report in summary

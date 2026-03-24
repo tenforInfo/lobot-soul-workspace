@@ -1,25 +1,24 @@
-## Task: Execute Push Sync
-
-**Trigger format:** `/push` or `/push [id1] [id2] ...`
-
-**CRITICAL CONSTRAINTS:**
-- DO NOT output a plan.
-- DO NOT ask for `(y/n)` confirmation.
-- DO NOT explain the command.
-- Execute IMMEDIATELY.
-
+---
+name: sync-push
+description: Push local changes to git remotes. Default targets are bunny_stack and the current workspace. Accepts optional project ids to push specific projects from registry.yml. No confirmation required — executes immediately.
 ---
 
-### Case 1: No args
+## Trigger
 
-Execute immediately, no checks:
+`/push` or `/push [id1] [id2] ...`
+
+Skip all other analysis. Execute immediately.
+
+## Steps
+
+### Case 1: No args
 
 ```bash
 cd /Users/tensorinfo/source/bunny_stack && git add . && git commit -m "chore: manual quick sync" && git push
 cd /Users/tensorinfo/clawd && git add . && git commit -m "chore: manual quick sync" && git push
 ```
 
-After execution, print summary with local path, remote URL, and a brief list of committed files (from `git diff HEAD~1 --name-only`):
+Print summary after execution:
 
 ```
 ✅ bunny_stack
@@ -29,10 +28,10 @@ After execution, print summary with local path, remote URL, and a brief list of 
 ✅ workspace
    local : /Users/tensorinfo/clawd
    remote: <git -C /Users/tensorinfo/clawd remote get-url origin>
-   committed: memory/2026-03-23.md
+   committed: nothing
 ```
 
-If nothing to commit (working tree clean), show `committed: nothing` instead.
+Get committed files from `git diff HEAD~1 --name-only`. If working tree was clean, show `committed: nothing`.
 
 ---
 
@@ -40,13 +39,12 @@ If nothing to commit (working tree clean), show `committed: nothing` instead.
 
 1. Read `/Users/tensorinfo/source/bunny_stack/registry.yml`
 2. For each id:
-   - **Found and `local_path` is not null**: replace `$SOURCE_ROOT` with `${SOURCE_ROOT:-$HOME/source/cool-tool}`, then execute immediately:
+   - **Found, `local_path` not null** → resolve path (replace `$SOURCE_ROOT` with `${SOURCE_ROOT:-$HOME/source/cool-tool}`), execute:
      ```bash
      cd "<resolved_path>" && git add . && git commit -m "chore: manual quick sync" && git push
      ```
-   - **Not found or `local_path` is null**: skip, do not interrupt other targets
-
-3. Print summary after all targets — include local path, remote from registry `git` field, and committed files:
+   - **Not found or `local_path` is null** → skip, do not interrupt other targets
+3. Print summary after all targets:
 
 ```
 ✅ bunny_stack
@@ -56,3 +54,10 @@ If nothing to commit (working tree clean), show `committed: nothing` instead.
 ❌ side-project-idea — skipped (local_path is null)
 ❌ unknown-id — skipped (not found in registry)
 ```
+
+## Constraints
+
+- Do NOT ask for confirmation
+- Do NOT explain the command
+- Do NOT output a plan
+- On failure, continue to next target — report in summary
