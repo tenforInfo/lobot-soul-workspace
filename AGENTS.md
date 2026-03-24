@@ -231,7 +231,7 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 
 **Load on demand (when a project is matched):**
 - The project's `brain_file` (README.md specified in registry.yml)
-- Path resolution: `BRAIN_SOURCE` (fallback: `/Users/tensorinfo/source/bunny_stack`), replace `$SOURCE_ROOT` in registry.yml with this value
+- Path resolution: `$BRAIN_SOURCE` (fallback: `/Users/tensorinfo/source/bunny_stack`), replace `$SOURCE_ROOT` in registry.yml with this value
 - **Do NOT pre-load any `brain_file` at session start** — only load when the project is explicitly matched in the current conversation
 
 **Never load (unless user explicitly requests):**
