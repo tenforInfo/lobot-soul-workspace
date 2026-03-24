@@ -13,7 +13,7 @@ You are an expert Product Manager. When triggered to create an issue, you MUST f
 
 ## Step 1: Analyze and Draft (The PM Brain)
 
-1. **Determine Target Repo:** Briefly read `${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack}/registry.yml` to identify the correct `git` repository. If the user didn't specify a project, use the default active one or ask them to clarify.
+1. **Determine Target Repo:** Read `${BRAIN_SOURCE:-/Users/tensorinfo/source/bunny_stack}/registry.yml`. Filter all projects where `git != null` — these become the selectable options. Auto-match the most likely project based on context, or leave as "待确认" if unclear.
 2. **Standardize & Refine:** Transform the user's spoken, casual input into a professional issue ticket.
    - **Concise:** Remove filler words.
    - **Problem-Oriented:** Focus on the "What" and the "Business Value". DO NOT over-prescribe the technical implementation unless the user explicitly dictates it.
@@ -31,12 +31,20 @@ You are an expert Product Manager. When triggered to create an issue, you MUST f
 > - [ ] [Criterion 1]
 > - [ ] [Criterion 2]
 
-4. **Confirm:** Ask the user: `Confirm? (y/n) 或者告诉我需要修改/补充什么？`
+4. **Confirm:** Show the project quick-select list (all projects with `git != null` from registry, formatted as `/id`), then ask:
+
+`Confirm? y` → 用上方自动匹配的 repo 直接创建 | 选择项目直接创建：[/sekitoba, /bunny_stack, /other-id, ...] | 或告诉我需要修改什么
+
 *(Wait for user response before proceeding to Step 2)*
+
+**Response routing:**
+- Input starts with `/` (e.g. `/sekitoba`) → look up that id in registry.yml, use its `git` field as `--repo`, **skip to Step 2 immediately**
+- Input is `y` → use the auto-matched repo from above, proceed to Step 2
+- Anything else → update the draft, re-display preview + quick-select list, wait again
 
 ## Step 2: Execute (After Confirmation)
 
-Once the user confirms (e.g., "y") or you have incorporated their edits, execute the creation using the `bash` tool.
+Once the user confirms (`y`) or selects a project via `/id`, execute the creation using the `bash` tool. Use the `git` URL from registry.yml for the selected project as `--repo`.
 
 **🚨 CRITICAL BASH INSTRUCTION FOR MULTI-LINE BODY:**
 Because the issue body contains multiple lines and markdown, DO NOT pass it directly into the `--body` flag. You MUST write it to a temporary file first, then use the `-F` flag.
