@@ -1,6 +1,6 @@
 ## Task: Execute Push Sync
 
-**触发格式：** `/push` 或 `/push [id1] [id2] ...`
+**Trigger format:** `/push` or `/push [id1] [id2] ...`
 
 **CRITICAL CONSTRAINTS:**
 - DO NOT output a plan.
@@ -10,44 +10,49 @@
 
 ---
 
-### 情况一：无参数
+### Case 1: No args
 
-直接执行，不做任何判断：
+Execute immediately, no checks:
 
 ```bash
 cd /Users/tensorinfo/source/bunny_stack && git add . && git commit -m "chore: manual quick sync" && git push
 cd /Users/tensorinfo/clawd && git add . && git commit -m "chore: manual quick sync" && git push
 ```
 
-执行完后输出摘要，显示本地完整路径和 remote URL：
+After execution, print summary with local path, remote URL, and a brief list of committed files (from `git diff HEAD~1 --name-only`):
 
 ```
 ✅ bunny_stack
    local : /Users/tensorinfo/source/bunny_stack
    remote: <git -C /Users/tensorinfo/source/bunny_stack remote get-url origin>
+   committed: SOUL.md, AGENTS.md
 ✅ workspace
    local : /Users/tensorinfo/clawd
    remote: <git -C /Users/tensorinfo/clawd remote get-url origin>
+   committed: memory/2026-03-23.md
 ```
+
+If nothing to commit (working tree clean), show `committed: nothing` instead.
 
 ---
 
-### 情况二：有 id 参数
+### Case 2: With id args
 
-1. 读取 `/Users/tensorinfo/source/bunny_stack/registry.yml`
-2. 对每个 id：
-   - **找到且 `local_path` 不为 null**：将 `$SOURCE_ROOT` 替换为 `${SOURCE_ROOT:-$HOME/source/cool-tool}`，立即执行：
+1. Read `/Users/tensorinfo/source/bunny_stack/registry.yml`
+2. For each id:
+   - **Found and `local_path` is not null**: replace `$SOURCE_ROOT` with `${SOURCE_ROOT:-$HOME/source/cool-tool}`, then execute immediately:
      ```bash
      cd "<resolved_path>" && git add . && git commit -m "chore: manual quick sync" && git push
      ```
-   - **未找到或 `local_path` 为 null**：跳过，不中断其他目标
+   - **Not found or `local_path` is null**: skip, do not interrupt other targets
 
-3. 所有目标执行完后输出摘要，显示本地完整路径和 registry 中的 `git` 字段：
+3. Print summary after all targets — include local path, remote from registry `git` field, and committed files:
 
 ```
 ✅ bunny_stack
    local : /Users/tensorinfo/source/bunny_stack
    remote: https://github.com/tenforInfo/bunny_stack
+   committed: SOUL.md
 ❌ side-project-idea — skipped (local_path is null)
 ❌ unknown-id — skipped (not found in registry)
 ```
