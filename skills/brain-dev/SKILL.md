@@ -74,7 +74,9 @@ If the branch already exists, report the error and stop.
 ```bash
 cat << EOF > <worktree_dir>/.agent_instruction.txt
 Task: <task_desc>
-$(gh issue view <issue_number> --repo <git_url> --json body -q .body 2>/dev/null || echo "No issue body")
+$(gh issue view <issue_number> --repo <git_url> --json body,comments \
+  --jq '"## Issue Body\n" + .body + "\n\n## Comments\n" + (.comments | map("### @" + .author.login + "\n" + .body) | join("\n\n"))' \
+  2>/dev/null || echo "No issue body")
 
 Context: You are working in a git worktree at <worktree_dir>.
 Rules:
