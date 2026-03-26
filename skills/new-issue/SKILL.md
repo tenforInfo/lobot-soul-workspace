@@ -38,11 +38,11 @@ You are an expert Product Manager. When triggered to create an issue, you MUST f
 > - [ ] [Criterion 1]
 > - [ ] [Criterion 2]
 
-5. **Confirm:** Show the project quick-select list (all projects with `git != null` from registry, formatted as `/id`), then ask:
+5. **Confirm:** After showing the Issue Draft above, present the project quick-select list exactly once (all projects with `git != null` from registry, formatted as `/id`) and then ask for confirmation.
 
 `Confirm? y` → 用上方自动匹配的 repo 直接创建 | 选择项目直接创建：[/sekitoba, /bunny_stack, /other-id, ...] | 或告诉我需要修改什么
 
-*(Wait for user response before proceeding to Step 2)*
+*(Wait for user response before proceeding to Step 2 — do not re-render the project list during preview/after confirmation.)*
 
 **Response routing:**
 - Input starts with `/` (e.g. `/sekitoba`) → look up that id in registry.yml, use its `git` field as `--repo`, **skip to Step 2 immediately**
