@@ -44,6 +44,28 @@ Format: concise, max 3 lines. Important actions include a confirm button.
 
 ---
 
+## [sekitoba] Discord
+
+| Bot | Purpose |
+|-----|---------|
+| Bot C | Image delivery, meeting transcripts |
+
+---
+
+## [sekitoba] Sending Images
+
+**Rule: never send a local file path. Always upload to R2 first, then send the public URL.**
+
+```bash
+URL=$(upload-r2-image "$IMAGE_PATH" sekitoba 2>&1 | grep '^https://')
+```
+
+Then use `$URL` in the normal Telegram / Discord message flow. The platform embeds the image automatically.
+
+Global command: `upload-r2-image` (pre-installed on this machine)
+
+---
+
 ## [OpenClaw] File Tools
 
 - Read files: Read
