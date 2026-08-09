@@ -44,7 +44,7 @@ Format: concise, max 3 lines. Important actions include a confirm button.
 
 ---
 
-## [sekitoba] Discord
+## [OpenClaw] Discord
 
 | Bot | Purpose |
 |-----|---------|
@@ -52,7 +52,7 @@ Format: concise, max 3 lines. Important actions include a confirm button.
 
 ---
 
-## [sekitoba] Sending Images
+## [OpenClaw] Sending Images
 
 **Rule: never send a local file path. Always upload to R2 first, then send the public URL.**
 
@@ -80,7 +80,7 @@ Use this file as the local truth for machine-specific capabilities.
 
 - OpenClaw on this machine is allowed to act as an agent, not just a text assistant.
 - If a user asks for browser work, local file access, or uploads, check this file and the current tool list before refusing.
-- Do not say "I have no permission" unless a real tool call fails with an explicit permission or sandbox error.
+- Before concluding a task can't be done for lack of permission, try the tool call and inspect the actual error. Only report "no permission" when the error explicitly says so (a permission or sandbox denial) — other failures (timeout, missing parameter, bad target) are not permission issues and should be reported as what they are.
 
 ## [OpenClaw] Browser Diagnostics
 
@@ -92,10 +92,10 @@ Use this file as the local truth for machine-specific capabilities.
 - If browser automation fails, report the concrete failure and next fix.
 - If logs mention gateway timeout, the likely fix is restarting the OpenClaw gateway rather than changing prompt wording.
 
-## [sekitoba] Local File Access
+## [OpenClaw] Local File Access
 
 - Reading local paths such as `/tmp/...` is allowed through the normal workspace file or shell tools when available.
-- Do not refuse `/tmp` access by default; verify by trying the appropriate tool first.
+- Try the appropriate tool first rather than assuming `/tmp` is blocked. If it fails, check whether the error is an explicit permission/sandbox denial before concluding access is restricted.
 
 **Constraints:**
 - Do NOT use web search unless user explicitly requests
