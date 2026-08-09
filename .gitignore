@@ -6,3 +6,5 @@ avatars/
 *.jpg
 *.jpeg
 .openclaw/
+claude/
+codex/
